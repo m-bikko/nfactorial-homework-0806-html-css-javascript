@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>    
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>background video</title>
+            <link rel="stylesheet" href="styles/index.css">
+        </head>
+    <body>
+      <div class="background">
+        <video id="video-background" muted loop>
+            <source src="source/video.mp4">
+          </source> 
+        </video>
+      
+        <div class="container">
+          <div class="header">
+            <h1 class="txt">Music Player</h1>
+            <button class="myBtn button button1" id="btn-change-background" onclick="playVideo()">PlayV/StopV</button>
+            <button class="button button1" id="ASong" onClick="playPause()">
+              <audio src="source/5 Seconds Of Summer - Youngblood.mp3" id="myAudio"></audio>
+              Song
+
+          </div>
+
+          <div class="center">
+            <div >
+              <div class="playpause-track" >
+                <img src="source/1257428.png" alt="">
+              </div>
+            </div>
+  
+
+            <div class="progress-bar">
+              <input type="range" id="progressBar" min="0" max="" value="0" />
+            </div>
+            <div class="track-time">
+              <div id="currentTime"></div>
+              <div id="durationTime"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const background = document.getElementById("video-background")
+        let playVideoBtn = document.getElementById("btn-change-background")
+        const playPauseTrackBtn = document.getElementById("ASong")
+        const audio = document.getElementById("myAudio")
+        const audiot = document.getAnimations("audio")
+        const progressBar = document.getElementById("progressBar")
+        let isPlaying = false;
+
+        function playPause() {
+          if (isPlaying) {
+            audio.pause();
+            playPauseTrackBtn.style.backgroundColor = 'red'
+            
+          } else {
+            audio.play();
+            playPauseTrackBtn.style.backgroundColor = 'green'
+          }
+          isPlaying = !isPlaying;
+        } 
+
+        function playVideo(){
+          if(background.paused){
+            background.play();
+            playVideoBtn.style.backgroundColor = 'green'
+          }else{
+            background.pause()
+            playVideoBtn.style.backgroundColor = 'red'
+          }
+        }
+
+
+        function progressValue() {
+          progressBar.max = track.duration;
+          progressBar.value = track.currentTime;
+
+          currentTime.textContent = formatTime(track.currentTime);
+          durationTime.textContent = formatTime(track.duration);
+        }
+
+        setInterval(progressValue, 500);
+
+        function formatTime(sec) {
+          let minutes = Math.floor(sec / 60);
+          let seconds = Math.floor(sec - minutes * 60);
+          if (seconds < 10) {
+            seconds = `0${seconds}`;
+          }
+          return `${minutes}:${seconds}`;
+        }
+
+        function changeProgressBar() {
+          track.currentTime = progressBar.value;
+        }
+
+        progressBar.addEventListener("click", changeProgressBar);
+
+        document.addEventListener('keyup', (event) => {
+          var name = event.key;
+          var code = event.code;
+          // Alert the key name and key code on keydown
+          alert(`Key pressed ${name} \r\n Key code value: ${code}`);
+        }, false);
+
+      </script>
+    </body>
+
+</html>
